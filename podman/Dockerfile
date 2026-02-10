@@ -1,3 +1,4 @@
+# Source: https://github.com/containers/image_build/blob/7586f40841d68018fa373fd9e6cba11ff867f93a/podman/
 FROM quay.io/podman/stable:latest AS base
 FROM base
 
@@ -16,9 +17,15 @@ RUN dnf -y install \
     zip \
     tar \
     gzip \
-    git \
+    p7zip \
+    p7zip-plugins \
+    # Build tools
+    task \ 
     make \
     cmake \
+    # Support
+    bash \
+    git \
     gcc \
     ca-certificates \
     gnupg \

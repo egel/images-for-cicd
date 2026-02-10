@@ -20,6 +20,21 @@ podman pull egel/gitlab-dind:latest
 podman pull egel/podman:latest
 ```
 
+## Build
+
+Here is very trivial script which build the images and push to repository
+
+```sh
+# github
+./scripts/build_and_push.sh for_github
+
+# gitlab
+./scripts/build_and_push.sh for_gitlab
+
+# podman
+./scripts/build_and_push.sh for_podman
+```
+
 ## License
 
 Apache License Version 2.0
