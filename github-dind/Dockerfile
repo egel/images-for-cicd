@@ -6,7 +6,9 @@ FROM base
 USER root
 
 # Install essential system packages
-RUN add-apt-repository universe && apt-get update && apt-get install -y \
+RUN add-apt-repository universe 
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/task/task/setup.deb.sh' | bash
+RUN apt-get update && apt-get install -y \
     # Core utilities
     curl \
     wget \
@@ -16,7 +18,6 @@ RUN add-apt-repository universe && apt-get update && apt-get install -y \
     gzip \
     git \
     p7zip \
-    p7zip-plugins \
     # Build tools
     build-essential \
     task \
