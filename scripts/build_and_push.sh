@@ -10,7 +10,8 @@ DOCKERHUB_PODMAN_BASEURL=egel/podman
 DOCKERHUB_PODMAN_LATEST=${DOCKERHUB_PODMAN_BASEURL}:latest
 
 function build_image() {
-  local image_name=$1
+  local directory=$1
+  local image_name=$2
 
   local pod="$(podman manifest exists ${image_name})"
 
@@ -30,8 +31,9 @@ function build_image() {
   echo ""
   echo "Start building images..."
   podman build \
+    --no-cache \
     --platform linux/amd64,linux/arm64 \
-    --file podman/Dockerfile \
+    --file ${directory}/Dockerfile \
     --manifest ${image_name}
 
   echo ""
@@ -45,18 +47,18 @@ function build_image() {
 function main() {
   case "$1" in
   for_gitlab)
-    build_image "${DOCKERHUB_GITLAB_LATEST}"
+    build_image "gitlab-dind" "${DOCKERHUB_GITLAB_LATEST}"
     ;;
   for_github)
-    build_image "${DOCKERHUB_GITHUB_LATEST}"
+    build_image "github-dind" "${DOCKERHUB_GITHUB_LATEST}"
     ;;
   for_podman)
-    build_image "${DOCKERHUB_PODMAN_LATEST}"
+    build_image "podman" "${DOCKERHUB_PODMAN_LATEST}"
     ;;
   clean)
-    podman rm ${DOCKERHUB_PODMAN_LATEST}
-    podman rm ${DOCKERHUB_GITHUB_LATEST}
-    podman rm ${DOCKERHUB_GITLAB_LATEST}
+    podman manifest rm ${DOCKERHUB_GITLAB_LATEST}
+    podman manifest rm ${DOCKERHUB_GITHUB_LATEST}
+    podman manifest rm ${DOCKERHUB_PODMAN_LATEST}
     ;;
   *)
     echo "Usage: for_gitlab, for_github, for_podman, clean"
