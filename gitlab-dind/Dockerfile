@@ -11,10 +11,9 @@ RUN apk add --update \
       zip \
       tar \
       gzip \
-      p7zip \
-      p7zip-plugins \
+      7zip \
       # Build tools
-      build-essential \
+      alpine-sdk \
       task \
       make \
       cmake \
@@ -33,4 +32,4 @@ RUN apk add --update \
       py3-pip \
       py3-cryptography \
       py3-setuptools
-      #py3-dockercompose \
+      # newer docker:dind already has docker with docker-compose within
